@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+<style>
+h1 {  color:white;
+     background:black;
+    text-align:center;
+}
+
+body{ background-color:lightblue;
+color:black;
+font-family:arial;
+}
+
+</style>
+  </head>
+   <body>
+<h1> Steganogrphy source code</h1>
+
+  <p>
+ 
+
+
+function flooring(value)    </br>
+{    </br>
+   var x= Math.floor(value/16) *16;    </br>
+   return x;    </br>
+}    </br>
+    </br>
+function mainmodify(img)     </br>
+<p>//as this is the main imaga in which an image is to be hid, we modify this picture's pixels
+//by floor method above. </p>    </br>
+{      </br>
+    for(var pixel of img.values())        </br>
+    {    </br>
+        pixel.setRed(flooring(pixel.getRed()) );    </br>
+        pixel.setGreen(flooring(pixel.getGreen()) );    </br>
+        pixel.setBlue(flooring(pixel.getBlue()) );    </br>
+    }    </br>
+   return img;    </br>
+}    </br>
+    </br>
+function hidemodify(img)    </br>
+<p>//as this is th picture to be hidden we modify this picture with math below   </p> </br>
+{    </br>    
+    for(var pixel of img.values() )    </br>
+    {    </br>
+        pixel.setRed(Math.floor(pixel.getRed())/16);    </br>
+        pixel.setGreen(Math.floor(pixel.getGreen())/16);    </br>
+        pixel.setRed(Math.floor(pixel.getRed())/16);    </br>
+    }    </br>
+    return img;    </br>
+}    </br>
+    </br>
+function combine(img1,img2)     </br>
+<p>//to hide one picture in other  </p>  </br>
+{    </br>
+    var result=new SimpleImage(img1.getWidth(),img2.getHeight());    </br>
+    for(var pixel of result.values())    </br>
+    {    </br>    
+        var x=pixel.getX();    </br>
+        var y=pixel.getY();    </br>
+            </br>
+        var res=img1.getPixel(x,y);    </br>
+        var res1=img2.getPixel(x,y);    </br>
+            </br>
+        pixel.setRed(res.getRed()+res1.getRed());    </br>
+        pixel.setGreen(res.getGreen()+res1.getGreen());    </br>
+        pixel.setBlue(res.getBlue()+res1.getBlue());    </br>
+    }    </br>
+    return result;    </br>
+}    </br>
+    </br>
+function extract(img1)     </br>
+<p>//to extract the hidden image from the picture  </p>  </br>
+{    </br>
+    for(var pixel of img1.values())    </br>
+    {    </br>
+        pixel.setRed((pixel.getRed()%16)*16);    </br>
+        pixel.setGreen((pixel.getGreen()%16)*16);    </br>
+        pixel.setBlue((pixel.getBlue()%16)*16);    </br>
+    }    </br>
+    return img1;    </br>
+}    </br>
+    </br>
+function crop(img,width,height)    </br>
+<li>//this is a function to crop the image to wanted width and height   </li> </br>
+{    </br>
+    var resul=new SimpleImage(width,height);    </br>
+    for(var pixel of img.values())    </br>
+    {    </br>
+    var x=pixel.getX();    </br>
+    var y=pixel.getY();    </br>
+        </br>
+       if(x<width && y<height)    </br>
+       {    </br>
+           var p=resul.getPixel(x,y);    </br>
+          p.setRed(pixel.getRed());    </br>
+          p.setGreen(pixel.getGreen());    </br>
+          p.setBlue(pixel.getBlue());    </br>
+       }    </br>
+    }    </br>    
+    return resul;    </br>
+}    </br>
+    </br>
+    </br>
+var mainimage=new SimpleImage("skyline.jpg");<p>//taking the main image in which an image is hid </p>   </br>
+var hideimage=new SimpleImage("usain.jpg");<p>//taking a image which is to be hidden  </p>  </br>
+    </br>
+<p>//below is th calling of functions and using them  </p>  </br>
+mainimage=mainmodify(mainimage);    </br>
+hideimage=hidemodify(hideimage);    </br>
+var combined=combine(mainimage,hideimage);    </br>
+var extracted=extract(combined);    </br>
+var imgcrp=new SimpleImage("smallpanda.png");    </br>
+var croped=crop(imgcrp,200,150);    </br>
+
+<p>//below is to prnt the image which we modified above    </p></br>
+print(combined);    </br>
+
+    </br>
+
+  </p>
+
+   </body>
+
+</html>
+
+
+
+
